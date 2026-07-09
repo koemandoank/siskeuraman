@@ -167,8 +167,16 @@ npx prisma generate
 
 Migration
 
+If your environment allows a shadow database and direct connections, use migrations:
+
 ```bash
 npx prisma migrate dev
+```
+
+If your network or Supabase setup prevents shadow DB usage (e.g., IPv6-only hosts or pooler restrictions), the recommended alternative is to use `prisma db push` to synchronize the schema without creating migration history:
+
+```bash
+npm run db:push
 ```
 
 Seed Database
@@ -179,9 +187,17 @@ npm run seed
 
 Reset Database (Development)
 
+If migrations are used:
+
 ```bash
 npx prisma migrate reset
 ```
+
+If you used `db push`, recreate schema manually or drop and `db push` again as needed.
+
+Notes:
+- `prisma db push` is suitable for development and when shadow DB is unavailable, but it does not create migration files. Create proper migrations once a shadow DB / direct DB access is available.
+- Be cautious with `--accept-data-loss` when using db push in production.
 
 ---
 
