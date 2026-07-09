@@ -26,7 +26,7 @@ Status Legend:
 * ✅ Tailwind CSS
 * ✅ shadcn/ui
 * ✅ Prisma
-* ⏳ Supabase (client & schema siap, project real belum dibuat — menunggu kredensial)
+* ✅ Supabase (project real terhubung, schema di-push, seed 4 user berhasil)
 * ✅ Environment Variables
 * ✅ ESLint
 * ✅ Prettier

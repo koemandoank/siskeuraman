@@ -72,6 +72,12 @@ Refactor
   * Prisma seed skeleton (`prisma/seed.ts`) — data user per role.
   * ESLint (flat config + FlatCompat), Prettier + prettier-plugin-tailwindcss.
   * `.env` / `.env.local` / `.env.example` dengan placeholder.
+  * Koneksi ke project Supabase asli (region ap-southeast-1) — schema
+    di-push via `prisma db push`, seed awal 4 user (satu per role) berhasil.
+  * Catatan: `prisma migrate dev` tidak dapat dipakai karena shadow database
+    tidak didukung oleh connection pooler Supabase dari jaringan ini, dan
+    host direct (`db.*.supabase.co`) tidak terjangkau (IPv6-only). Migration
+    history formal menyusul begitu direct connection tersedia.
 
 ## Changed
 
