@@ -1,6 +1,6 @@
 import { NextResponse } from "next/server";
-import { getOrCreateUserFromRequest } from "../../../../../lib/auth";
-import { prisma } from "../../../../../lib/prisma";
+import { getOrCreateUserFromRequest } from "../../../../lib/auth";
+import { prisma } from "../../../../lib/prisma";
 
 export async function GET() {
   try {
