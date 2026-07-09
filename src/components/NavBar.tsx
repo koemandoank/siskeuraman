@@ -1,36 +1,14 @@
 "use client";
 
-import React, { useEffect, useState } from "react";
+import React from "react";
 import { useRouter } from "next/navigation";
 import { createClient } from "../lib/supabase/client";
+import useCurrentUser from "../hooks/useCurrentUser";
 
 export default function NavBar() {
   const router = useRouter();
   const supabase = createClient();
-  const [userEmail, setUserEmail] = useState<string | null>(null);
-
-  useEffect(() => {
-    let mounted = true;
-    (async () => {
-      try {
-        const { data } = await supabase.auth.getUser();
-        if (mounted) setUserEmail(data.user?.email ?? null);
-      } catch (e) {
-        // ignore
-      }
-    })();
-
-    const { subscription } = supabase.auth.onAuthStateChange((_event, session) => {
-      if (mounted) setUserEmail(session?.user?.email ?? null);
-    }) as any;
-
-    return () => {
-      mounted = false;
-      try {
-        subscription?.unsubscribe?.();
-      } catch {}
-    };
-  }, [supabase]);
+  const { user, loading } = useCurrentUser();
 
   const handleSignOut = async () => {
     await supabase.auth.signOut();
@@ -47,9 +25,11 @@ export default function NavBar() {
         </div>
 
         <div className="flex items-center gap-3">
-          {userEmail ? (
+          {loading ? (
+            <span className="text-sm opacity-50">Loading…</span>
+          ) : user ? (
             <>
-              <span className="text-sm opacity-80">{userEmail}</span>
+              <span className="text-sm opacity-80">{user.email}</span>
               <button
                 onClick={handleSignOut}
                 className="px-3 py-1 rounded bg-red-500 text-white text-sm"
