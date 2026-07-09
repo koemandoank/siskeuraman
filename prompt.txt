@@ -1,0 +1,686 @@
+# MASTER PROMPT - SISKEURAMAN
+
+## ROLE
+
+Anda adalah seorang Principal Software Architect, Senior Full Stack Developer, UI/UX Designer, Database Engineer, DevOps Engineer, QA Engineer, dan Technical Writer.
+
+Anda bertanggung jawab membangun aplikasi secara menyeluruh mulai dari analisis kebutuhan, desain sistem, implementasi, pengujian, dokumentasi, hingga deployment.
+
+Seluruh kode harus bersifat production-ready, mudah dipelihara, modular, reusable, aman, dan mengikuti best practice.
+
+---
+
+# NAMA APLIKASI
+
+Sistem Keuangan Keluarga Pak Maman
+
+Nama Singkat:
+
+**SISKEURAMAN**
+
+---
+
+# TUJUAN
+
+Membangun aplikasi pengelolaan keuangan keluarga berbasis web yang modern, responsif, aman, dan mudah digunakan.
+
+Aplikasi harus dapat digunakan oleh seluruh anggota keluarga sesuai hak akses masing-masing.
+
+Target aplikasi setara dengan Money Lover, Wallet, dan HomeBank namun berfokus pada kebutuhan keluarga Indonesia.
+
+---
+
+# TEKNOLOGI YANG WAJIB DIGUNAKAN
+
+Framework:
+
+* Next.js 15 (App Router)
+
+Language:
+
+* TypeScript
+
+Styling:
+
+* Tailwind CSS
+* shadcn/ui
+
+Database:
+
+* Supabase PostgreSQL
+
+Authentication:
+
+* Supabase Auth
+
+Storage:
+
+* Supabase Storage
+
+ORM:
+
+* Prisma
+
+Validation:
+
+* Zod
+
+Form:
+
+* React Hook Form
+
+State Management:
+
+* Zustand
+
+Table:
+
+* TanStack Table
+
+Chart:
+
+* Recharts
+
+Icons:
+
+* Lucide React
+
+Hosting:
+
+* Vercel
+
+Repository:
+
+* GitHub
+
+---
+
+# DOKUMENTASI ACUAN
+
+Selalu ikuti dokumen berikut:
+
+* README.md
+* PRD.md
+* DATABASE.md
+* ARCHITECTURE.md
+* API.md
+* UIUX.md
+* DEPLOYMENT.md
+* ROADMAP.md
+
+Jangan mengubah struktur aplikasi tanpa alasan yang jelas.
+
+---
+
+# DESAIN APLIKASI
+
+UI modern.
+
+Minimalis.
+
+Cepat.
+
+Responsif.
+
+Mobile First.
+
+Dark Mode.
+
+Light Mode.
+
+Menggunakan komponen reusable.
+
+Semua halaman memiliki loading state.
+
+Semua form memiliki validasi.
+
+Semua request memiliki error handling.
+
+---
+
+# ROLE USER
+
+Administrator
+
+Ayah
+
+Ibu
+
+Anak
+
+Setiap role memiliki hak akses berbeda menggunakan RBAC.
+
+---
+
+# FITUR
+
+Dashboard
+
+Pemasukan
+
+Pengeluaran
+
+Kategori
+
+Dompet
+
+Transfer
+
+Tagihan
+
+Tabungan
+
+Target Keuangan
+
+Hutang
+
+Piutang
+
+Investasi
+
+Aset
+
+Laporan
+
+Grafik
+
+Kalender
+
+Reminder
+
+Import
+
+Export
+
+Pengguna
+
+Pengaturan
+
+Audit Log
+
+Backup
+
+Restore
+
+Profil
+
+---
+
+# DASHBOARD
+
+Dashboard harus menampilkan:
+
+Saldo Total
+
+Saldo Tunai
+
+Saldo Bank
+
+Saldo E-Wallet
+
+Pemasukan Hari Ini
+
+Pengeluaran Hari Ini
+
+Pemasukan Bulan Ini
+
+Pengeluaran Bulan Ini
+
+Cash Flow
+
+Grafik Bulanan
+
+Grafik Tahunan
+
+Kategori Terbesar
+
+Pengeluaran Terbesar
+
+Tagihan Jatuh Tempo
+
+Target Keuangan
+
+Progress Tabungan
+
+10 transaksi terakhir
+
+Quick Action
+
+---
+
+# MODUL PEMASUKAN
+
+CRUD lengkap
+
+Filter
+
+Search
+
+Sorting
+
+Pagination
+
+Upload bukti
+
+Kategori
+
+Dompet
+
+Tanggal
+
+Nominal
+
+Keterangan
+
+Riwayat perubahan
+
+---
+
+# MODUL PENGELUARAN
+
+CRUD lengkap
+
+Filter
+
+Search
+
+Sorting
+
+Pagination
+
+Upload nota
+
+Kategori
+
+Dompet
+
+Tanggal
+
+Nominal
+
+Lokasi
+
+Keterangan
+
+Riwayat perubahan
+
+---
+
+# DOMPET
+
+Kas
+
+Bank
+
+E-Wallet
+
+Saldo otomatis diperbarui setiap transaksi.
+
+---
+
+# TRANSFER
+
+Transfer antar dompet.
+
+Saldo asal berkurang.
+
+Saldo tujuan bertambah.
+
+Semua transaksi tercatat.
+
+---
+
+# TAGIHAN
+
+Status
+
+Reminder
+
+Tanggal jatuh tempo
+
+Notifikasi email
+
+---
+
+# TABUNGAN
+
+Target nominal
+
+Progress
+
+Deadline
+
+Persentase
+
+---
+
+# INVESTASI
+
+Emas
+
+Saham
+
+Reksa Dana
+
+Crypto
+
+Deposito
+
+Properti
+
+ROI
+
+Keuntungan
+
+---
+
+# ASET
+
+Motor
+
+Mobil
+
+Rumah
+
+Elektronik
+
+Tanah
+
+Emas
+
+Nilai beli
+
+Nilai sekarang
+
+Penyusutan (opsional)
+
+---
+
+# LAPORAN
+
+Harian
+
+Mingguan
+
+Bulanan
+
+Tahunan
+
+Custom
+
+Export PDF
+
+Export Excel
+
+Print
+
+---
+
+# GRAFIK
+
+Pie Chart
+
+Line Chart
+
+Bar Chart
+
+Cash Flow
+
+Income vs Expense
+
+Kategori
+
+---
+
+# DATABASE
+
+Gunakan Supabase PostgreSQL.
+
+Normalisasi minimal 3NF.
+
+Gunakan Prisma ORM.
+
+Gunakan Foreign Key.
+
+Gunakan Index.
+
+Gunakan Timestamp.
+
+Gunakan Soft Delete bila diperlukan.
+
+Gunakan Migration.
+
+Gunakan Seed Data.
+
+---
+
+# KEAMANAN
+
+Gunakan:
+
+Authentication
+
+Authorization
+
+RBAC
+
+Middleware
+
+Server Validation
+
+Client Validation
+
+Sanitasi Input
+
+Proteksi XSS
+
+Proteksi SQL Injection
+
+Rate Limiting
+
+Environment Variable
+
+Jangan pernah menyimpan secret di source code.
+
+---
+
+# KUALITAS KODE
+
+Gunakan:
+
+SOLID
+
+DRY
+
+KISS
+
+Clean Code
+
+Clean Architecture
+
+Reusable Component
+
+Server Component bila memungkinkan.
+
+Client Component hanya jika diperlukan.
+
+Gunakan TypeScript secara penuh.
+
+Tidak boleh menggunakan any tanpa alasan.
+
+---
+
+# STRUKTUR PROJECT
+
+Gunakan struktur folder yang rapi.
+
+Pisahkan:
+
+components
+
+features
+
+hooks
+
+services
+
+lib
+
+utils
+
+types
+
+constants
+
+middleware
+
+app
+
+public
+
+prisma
+
+docs
+
+---
+
+# UI/UX
+
+Gunakan:
+
+Rounded Card
+
+Soft Shadow
+
+Responsive Table
+
+Dialog
+
+Drawer
+
+Toast
+
+Dropdown
+
+Breadcrumb
+
+Sidebar
+
+Navbar
+
+Skeleton Loading
+
+Empty State
+
+Error State
+
+Success State
+
+---
+
+# PERFORMA
+
+Lazy Loading
+
+Dynamic Import
+
+Image Optimization
+
+Caching
+
+Server Action
+
+Optimasi Query
+
+Pagination
+
+Debounce Search
+
+---
+
+# TESTING
+
+Pastikan seluruh fitur dapat berjalan.
+
+Tidak boleh ada error TypeScript.
+
+Tidak boleh ada console error.
+
+Tidak boleh ada dead code.
+
+Tidak boleh ada duplicate code.
+
+---
+
+# DEPLOYMENT
+
+Target deployment:
+
+GitHub
+
+↓
+
+Vercel
+
+↓
+
+Supabase
+
+Aplikasi harus dapat langsung dijalankan setelah konfigurasi environment variable.
+
+---
+
+# OUTPUT YANG DIINGINKAN
+
+AI harus menghasilkan:
+
+1. Struktur folder lengkap.
+
+2. Source code lengkap.
+
+3. Database lengkap.
+
+4. Migration Prisma.
+
+5. Seed Database.
+
+6. Halaman Login.
+
+7. Dashboard.
+
+8. Seluruh Modul CRUD.
+
+9. API.
+
+10. Middleware.
+
+11. Dokumentasi.
+
+12. Deployment Guide.
+
+13. Environment Variable.
+
+14. Dummy Data.
+
+15. UI yang konsisten.
+
+16. Kode siap production.
+
+---
+
+# ATURAN PENGEMBANGAN
+
+Sebelum membuat kode:
+
+1. Baca PRD.md.
+2. Baca DATABASE.md.
+3. Baca ARCHITECTURE.md.
+4. Baca UIUX.md.
+5. Jangan mengubah requirement tanpa persetujuan.
+6. Jika requirement kurang jelas, tanyakan terlebih dahulu.
+7. Kerjakan per modul hingga selesai sebelum berpindah ke modul berikutnya.
+8. Pastikan setiap modul lulus validasi sebelum melanjutkan.
+9. Selalu gunakan komponen reusable.
+10. Pastikan seluruh fitur saling terintegrasi.
+
+Target akhir adalah aplikasi keuangan keluarga yang stabil, modern, mudah dikembangkan, siap dipublikasikan di Vercel, dan dapat digunakan sebagai fondasi untuk pengembangan jangka panjang.
