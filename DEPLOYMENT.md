@@ -167,8 +167,16 @@ npx prisma generate
 
 Migration
 
+If your environment allows a shadow database and direct connections, use migrations:
+
 ```bash
 npx prisma migrate dev
+```
+
+If your network or Supabase setup prevents shadow DB usage (e.g., IPv6-only hosts or pooler restrictions), the recommended alternative is to use `prisma db push` to synchronize the schema without creating migration history:
+
+```bash
+npm run db:push
 ```
 
 Seed Database
@@ -179,9 +187,17 @@ npm run seed
 
 Reset Database (Development)
 
+If migrations are used:
+
 ```bash
 npx prisma migrate reset
 ```
+
+If you used `db push`, recreate schema manually or drop and `db push` again as needed.
+
+Notes:
+- `prisma db push` is suitable for development and when shadow DB is unavailable, but it does not create migration files. Create proper migrations once a shadow DB / direct DB access is available.
+- Be cautious with `--accept-data-loss` when using db push in production.
 
 ---
 
@@ -310,8 +326,16 @@ Sebelum deployment, pastikan:
 * Tidak ada error TypeScript
 * Tidak ada error ESLint
 * Tidak ada environment variable yang kosong
-* Prisma migration telah dijalankan
+* Prisma migration telah dijalankan (atau `prisma db push` jika shadow DB tidak tersedia)
 * Seed data tersedia (opsional untuk development)
+
+# Health check endpoint
+
+A health endpoint tersedia di `/api/health`. Gunakan untuk verifikasi otomatis di Vercel atau monitoring:
+
+- GET /api/health — mengembalikan JSON dengan status konektivitas DB dan apakah env vars penting tersedia.
+
+Di Vercel, gunakan URL tersebut sebagai readiness/health check agar deployment gagal jika variabel penting tidak diset atau DB tidak dapat dijangkau.
 
 ---
 

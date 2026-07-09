@@ -20,16 +20,16 @@ Status Legend:
 
 ## Project Setup
 
-* ✅ Repository GitHub
-* ✅ Next.js 15
-* ✅ TypeScript
-* ✅ Tailwind CSS
-* ✅ shadcn/ui
-* ✅ Prisma
-* ✅ Supabase (project real terhubung, schema di-push, seed 4 user berhasil)
-* ✅ Environment Variables
-* ✅ ESLint
-* ✅ Prettier
+* ⏳ Repository GitHub
+* ⏳ Next.js 15
+* ⏳ TypeScript
+* ⏳ Tailwind CSS
+* ⏳ shadcn/ui
+* ⏳ Prisma
+* ⏳ Supabase
+* ⏳ Environment Variables
+* ⏳ ESLint
+* ⏳ Prettier
 
 ---
 

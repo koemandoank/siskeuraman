@@ -54,30 +54,7 @@ Refactor
 
 ## Added
 
-* Sprint 0 — Project Foundation:
-  * Scaffold Next.js 15 (App Router) + TypeScript + `src/` directory.
-  * Tailwind CSS 3 + shadcn/ui (base-nova style, komponen inti: card, dialog,
-    drawer, dropdown-menu, badge, tabs, accordion, skeleton, sonner, table,
-    breadcrumb, sidebar, avatar, form, dll).
-  * Struktur folder sesuai ARCHITECTURE.md: `features/*` (15 modul),
-    `components`, `hooks`, `lib`, `services`, `store`, `types`, `constants`,
-    `providers`, `middleware`.
-  * Prisma schema lengkap (`prisma/schema.prisma`) mencakup seluruh tabel
-    DATABASE.md: users, categories, wallets, income, expense, transfers,
-    bills, savings, saving_transactions, goals, assets, investments, debts,
-    receivables, notifications, activity_logs, settings.
-  * Prisma client singleton (`src/lib/prisma.ts`).
-  * Supabase client browser & server helper (`src/lib/supabase/*`).
-  * Middleware dasar refresh session Supabase Auth (`src/middleware.ts`).
-  * Prisma seed skeleton (`prisma/seed.ts`) — data user per role.
-  * ESLint (flat config + FlatCompat), Prettier + prettier-plugin-tailwindcss.
-  * `.env` / `.env.local` / `.env.example` dengan placeholder.
-  * Koneksi ke project Supabase asli (region ap-southeast-1) — schema
-    di-push via `prisma db push`, seed awal 4 user (satu per role) berhasil.
-  * Catatan: `prisma migrate dev` tidak dapat dipakai karena shadow database
-    tidak didukung oleh connection pooler Supabase dari jaringan ini, dan
-    host direct (`db.*.supabase.co`) tidak terjangkau (IPv6-only). Migration
-    history formal menyusul begitu direct connection tersedia.
+* Belum ada.
 
 ## Changed
 
