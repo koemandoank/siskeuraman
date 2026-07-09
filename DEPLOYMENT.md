@@ -326,8 +326,16 @@ Sebelum deployment, pastikan:
 * Tidak ada error TypeScript
 * Tidak ada error ESLint
 * Tidak ada environment variable yang kosong
-* Prisma migration telah dijalankan
+* Prisma migration telah dijalankan (atau `prisma db push` jika shadow DB tidak tersedia)
 * Seed data tersedia (opsional untuk development)
+
+# Health check endpoint
+
+A health endpoint tersedia di `/api/health`. Gunakan untuk verifikasi otomatis di Vercel atau monitoring:
+
+- GET /api/health — mengembalikan JSON dengan status konektivitas DB dan apakah env vars penting tersedia.
+
+Di Vercel, gunakan URL tersebut sebagai readiness/health check agar deployment gagal jika variabel penting tidak diset atau DB tidak dapat dijangkau.
 
 ---
 
