@@ -65,4 +65,13 @@ Sprint 0: Setup ✓
 
 ---
 
+---
+
+## Sprint 8: Transfer Antar Dompet ✓
+- [x] Server Actions: createTransfer, deleteTransfer (sudah ada sebelumnya)
+- [x] Halaman Transfer (form + daftar riwayat + hapus)
+- [x] Sidebar: link Transfer di grup Transaksi
+
+---
+
 **Aplikasi siap dicoba di lokal 🎉**

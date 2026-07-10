@@ -1,5 +1,11 @@
 # Changelog
 
+## Sprint 8 — Transfer Antar Dompet
+
+- Halaman `/dashboard/transfer`: form transfer + riwayat + hapus
+- Menggunakan Server Actions `createTransfer`/`deleteTransfer` yang sudah ada
+- Sidebar: tambah link Transfer di grup Transaksi
+
 ## Sprint 6 — Transaksi (Pemasukan & Pengeluaran)
 
 - Prisma schema: model `Transaction` (INCOME/EXPENSE)

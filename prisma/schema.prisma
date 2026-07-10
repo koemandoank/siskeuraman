@@ -61,6 +61,7 @@ model Family {
   wallets      Wallet[]
   transactions Transaction[]
   setting      Setting?
+  bills        Bill[]
 
   @@map("families")
 }
@@ -117,6 +118,7 @@ model Wallet {
 enum TransactionType {
   INCOME
   EXPENSE
+  TRANSFER
 }
 
 model Transaction {
@@ -125,17 +127,19 @@ model Transaction {
   family          Family          @relation(fields: [familyId], references: [id], onDelete: Cascade)
   walletId        String
   wallet          Wallet          @relation(fields: [walletId], references: [id])
-  categoryId      String
-  category        Category        @relation(fields: [categoryId], references: [id])
+  categoryId      String?
+  category        Category?       @relation(fields: [categoryId], references: [id])
   profileId       String
   profile         Profile         @relation(fields: [profileId], references: [id])
   type            TransactionType
   amount          Decimal         @db.Decimal(18, 2)
   description     String?
+  transferPairId  String?
   transactionDate DateTime        @default(now())
   createdAt       DateTime        @default(now())
   updatedAt       DateTime        @updatedAt
 
+  @@index([transferPairId])
   @@map("transactions")
 }
 
@@ -149,4 +153,33 @@ model Setting {
   language   String @default("id")
 
   @@map("settings")
+}
+
+enum BillRecurrence {
+  ONCE
+  WEEKLY
+  MONTHLY
+  YEARLY
+}
+
+enum BillStatus {
+  UNPAID
+  PAID
+}
+
+model Bill {
+  id         String         @id @default(uuid())
+  familyId   String
+  family     Family         @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  name       String
+  amount     Decimal        @db.Decimal(18, 2)
+  dueDate    DateTime
+  recurrence BillRecurrence @default(ONCE)
+  status     BillStatus     @default(UNPAID)
+  note       String?
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  @@index([familyId, status])
+  @@map("bills")
 }

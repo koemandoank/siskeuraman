@@ -13,6 +13,8 @@ import {
   Settings,
   LayoutDashboard,
   LogOut,
+  ArrowLeftRight,
+  Receipt,
 } from "lucide-react"
 import {
   Sidebar,
@@ -40,6 +42,13 @@ const navGroups = [
     items: [
       { title: "Pemasukan", url: "/dashboard/income", icon: TrendingUp },
       { title: "Pengeluaran", url: "/dashboard/expense", icon: TrendingDown },
+      { title: "Transfer", url: "/dashboard/transfer", icon: ArrowLeftRight },
+    ],
+  },
+  {
+    label: "Perencanaan",
+    items: [
+      { title: "Tagihan", url: "/dashboard/bills", icon: Receipt },
     ],
   },
   {
