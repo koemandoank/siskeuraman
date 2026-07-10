@@ -54,7 +54,20 @@ Refactor
 
 ## Added
 
-* Belum ada.
+* Sprint 0 — Project Foundation: Next.js 15 + TypeScript + Tailwind CSS 3 +
+  shadcn/ui (base-nova, komponen inti), struktur folder ARCHITECTURE.md
+  (`features/*` 15 modul), Prisma schema lengkap (20 model DATABASE.md),
+  Prisma client singleton, Supabase client browser/server, middleware dasar,
+  seed skeleton, ESLint + Prettier. Koneksi ke project Supabase asli
+  (ap-southeast-1) — schema di-push via `prisma db push`, seed 4 user
+  (satu per role) berhasil.
+* Sprint 1 — Authentication & Layout: Login/Logout via Supabase Auth
+  (Server Actions + `useActionState`), session check (`getCurrentUser`,
+  cached per request) + middleware redirect otomatis, RBAC dasar (menu
+  sidebar difilter per role), layout aplikasi (Sidebar collapsible,
+  Navbar dengan theme toggle & user menu, Footer, route group `(app)`),
+  theme switch light/dark/system (`next-themes`), halaman dashboard awal
+  (KPI placeholder — data asli menyusul Sprint 2).
 
 ## Changed
 
@@ -62,7 +75,9 @@ Refactor
 
 ## Fixed
 
-* Belum ada.
+* Regresi konfigurasi Tailwind (sempat ter-revert ke v4 oleh proses lain,
+  menyebabkan build Vercel gagal) — dikembalikan ke v3 + lockfile
+  di-regenerate.
 
 ---
 

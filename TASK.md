@@ -20,16 +20,16 @@ Status Legend:
 
 ## Project Setup
 
-* ⏳ Repository GitHub
-* ⏳ Next.js 15
-* ⏳ TypeScript
-* ⏳ Tailwind CSS
-* ⏳ shadcn/ui
-* ⏳ Prisma
-* ⏳ Supabase
-* ⏳ Environment Variables
-* ⏳ ESLint
-* ⏳ Prettier
+* ✅ Repository GitHub
+* ✅ Next.js 15
+* ✅ TypeScript
+* ✅ Tailwind CSS
+* ✅ shadcn/ui
+* ✅ Prisma
+* ✅ Supabase (project real terhubung, schema di-push, seed 4 user)
+* ✅ Environment Variables
+* ✅ ESLint
+* ✅ Prettier
 
 ---
 
@@ -37,24 +37,23 @@ Status Legend:
 
 ## Authentication
 
-* ⏳ Login
-* ⏳ Logout
-* ⏳ Session
-* ⏳ RBAC
-* ⏳ Middleware
+* ✅ Login
+* ✅ Logout
+* ✅ Session
+* ✅ RBAC (menu difilter per role; halaman khusus per-role menyusul di sprint fitur terkait)
+* ✅ Middleware
 
 ---
 
 ## Layout
 
-* ⏳ Sidebar
-* ⏳ Navbar
-* ⏳ Footer
-* ⏳ Dashboard Layout
-* ⏳ Theme Switch
+* ✅ Sidebar
+* ✅ Navbar
+* ✅ Footer
+* ✅ Dashboard Layout
+* ✅ Theme Switch
 
 ---
-
 # Sprint 2
 
 ## Dashboard

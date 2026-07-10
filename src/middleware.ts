@@ -1,9 +1,13 @@
 import { createServerClient } from "@supabase/ssr";
 import { NextResponse, type NextRequest } from "next/server";
 
+const PUBLIC_PATHS = ["/login"];
+
 /**
- * Middleware dasar: refresh session Supabase Auth.
- * Proteksi route berbasis role (RBAC) akan dilengkapi di Sprint 1.
+ * Middleware: refresh session Supabase Auth + proteksi route dasar
+ * (redirect berdasar ada/tidaknya session). Pengecekan role & status
+ * aktif user (profile lengkap) dilakukan di layout (app)/layout.tsx
+ * karena butuh query Prisma yang tidak reliable di Edge Runtime.
  */
 export async function middleware(request: NextRequest) {
   let response = NextResponse.next({ request });
@@ -29,7 +33,24 @@ export async function middleware(request: NextRequest) {
     }
   );
 
-  await supabase.auth.getUser();
+  const {
+    data: { user },
+  } = await supabase.auth.getUser();
+
+  const { pathname } = request.nextUrl;
+  const isPublicPath = PUBLIC_PATHS.some((p) => pathname.startsWith(p));
+
+  if (!user && !isPublicPath) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/login";
+    return NextResponse.redirect(url);
+  }
+
+  if (user && isPublicPath) {
+    const url = request.nextUrl.clone();
+    url.pathname = "/dashboard";
+    return NextResponse.redirect(url);
+  }
 
   return response;
 }
