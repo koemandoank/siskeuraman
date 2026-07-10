@@ -239,7 +239,7 @@ export default async function DashboardPage() {
                           {t.type === "INCOME" ? "Pemasukan" : "Pengeluaran"} — Rp {Number(t.amount).toLocaleString("id-ID")}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {t.category.name} · {t.wallet.name}{t.description ? ` · ${t.description}` : ""}
+                          {t.category?.name} · {t.wallet.name}{t.description ? ` · ${t.description}` : ""}
                         </p>
                       </div>
                     </div>

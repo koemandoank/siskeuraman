@@ -104,7 +104,7 @@ export default async function ExpensePage() {
                     <span className="font-semibold text-red-600">
                       Rp {Number(t.amount).toLocaleString("id-ID")}
                     </span>
-                    <Badge variant="outline">{t.category.name}</Badge>
+                    <Badge variant="outline">{t.category?.name}</Badge>
                   </div>
                   <p className="text-muted-foreground mt-0.5 text-xs">
                     {t.wallet.name}
