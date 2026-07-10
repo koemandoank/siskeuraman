@@ -95,8 +95,6 @@ export async function deleteTransfer(formData: FormData) {
   });
   if (pair.length !== 2) throw new Error("Data transfer tidak ditemukan");
 
-  const outTx = pair.find((t) => t.walletId && Number(t.amount) > 0);
-
   await prisma.$transaction([
     ...pair.map((t) =>
       prisma.wallet.update({
