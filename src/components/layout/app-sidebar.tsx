@@ -2,7 +2,8 @@
 
 import Link from "next/link"
 import Image from "next/image"
-import { usePathname } from "next/navigation"
+import { usePathname, useRouter } from "next/navigation"
+import { useState } from "react"
 import {
   TrendingUp,
   TrendingDown,
@@ -11,6 +12,7 @@ import {
   Users,
   Settings,
   LayoutDashboard,
+  LogOut,
 } from "lucide-react"
 import {
   Sidebar,
@@ -24,6 +26,7 @@ import {
   SidebarGroupLabel,
   SidebarGroupContent,
 } from "@/components/ui/sidebar"
+import { createClient } from "@/lib/supabase/client"
 
 const navGroups = [
   {
@@ -57,6 +60,16 @@ const navGroups = [
 
 export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
   const pathname = usePathname()
+  const router = useRouter()
+  const [loggingOut, setLoggingOut] = useState(false)
+
+  const handleLogout = async () => {
+    setLoggingOut(true)
+    const supabase = createClient()
+    await supabase.auth.signOut()
+    router.push("/login")
+    router.refresh()
+  }
 
   return (
     <Sidebar {...props}>
@@ -99,8 +112,18 @@ export function AppSidebar({ ...props }: React.ComponentProps<typeof Sidebar>) {
           </SidebarGroup>
         ))}
       </SidebarContent>
-      <SidebarFooter className="p-4 text-center text-xs text-muted-foreground">
-        SIKARA v0.1.0
+      <SidebarFooter>
+        <SidebarMenu>
+          <SidebarMenuItem>
+            <SidebarMenuButton onClick={handleLogout} disabled={loggingOut}>
+              <LogOut />
+              <span>{loggingOut ? "Keluar..." : "Keluar"}</span>
+            </SidebarMenuButton>
+          </SidebarMenuItem>
+        </SidebarMenu>
+        <div className="p-2 text-center text-xs text-muted-foreground">
+          SIKARA v0.1.0
+        </div>
       </SidebarFooter>
     </Sidebar>
   )
