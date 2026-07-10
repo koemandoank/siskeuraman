@@ -9,11 +9,12 @@
     "lint": "eslint",
     "format": "prettier --write .",
     "seed": "tsx prisma/seed.ts",
+    "seed:auth": "tsx prisma/seed-auth.ts",
     "postinstall": "prisma generate",
     "db:push": "prisma db push"
   },
   "prisma": {
-    "seed": "tsx prisma/seed.ts"
+    "seed": "tsx prisma/seed-auth.ts"
   },
   "dependencies": {
     "@base-ui/react": "^1.6.0",
