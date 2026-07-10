@@ -1,5 +1,7 @@
 import type { Metadata } from "next";
 import { Geist, Geist_Mono } from "next/font/google";
+import { Toaster } from "@/components/ui/sonner";
+import { TooltipProvider } from "@/components/ui/tooltip";
 import { ThemeProvider } from "@/providers/theme";
 import "./globals.css";
 
@@ -30,7 +32,12 @@ export default function RootLayout({
       suppressHydrationWarning
     >
       <body>
-        <ThemeProvider>{children}</ThemeProvider>
+        <TooltipProvider>
+          <ThemeProvider>
+            {children}
+            <Toaster />
+          </ThemeProvider>
+        </TooltipProvider>
       </body>
     </html>
   );
