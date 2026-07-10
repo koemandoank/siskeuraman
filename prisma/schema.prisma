@@ -11,3 +11,141 @@ generator client {
 datasource db {
   provider = "postgresql"
 }
+
+enum Role {
+  ADMIN
+  MEMBER
+}
+
+enum CategoryType {
+  INCOME
+  EXPENSE
+}
+
+enum WalletType {
+  CASH
+  BANK
+  E_WALLET
+}
+
+enum FamilyRole {
+  ADMIN
+  MEMBER
+}
+
+model Profile {
+  id        String   @id @default(uuid())
+  email     String   @unique
+  name      String?
+  avatarUrl String?
+  role      Role     @default(MEMBER)
+  createdAt DateTime @default(now())
+  updatedAt DateTime @updatedAt
+
+  families     FamilyMember[]
+  transactions Transaction[]
+
+  @@map("profiles")
+}
+
+model Family {
+  id         String         @id @default(uuid())
+  name       String
+  inviteCode String         @unique @default(cuid())
+  createdAt  DateTime       @default(now())
+  updatedAt  DateTime       @updatedAt
+
+  members      FamilyMember[]
+  categories   Category[]
+  wallets      Wallet[]
+  transactions Transaction[]
+  setting      Setting?
+
+  @@map("families")
+}
+
+model FamilyMember {
+  id        String     @id @default(uuid())
+  role      FamilyRole @default(MEMBER)
+  joinedAt  DateTime   @default(now())
+
+  profileId String
+  profile   Profile  @relation(fields: [profileId], references: [id], onDelete: Cascade)
+
+  familyId String
+  family   Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  @@unique([profileId, familyId])
+  @@map("family_members")
+}
+
+model Category {
+  id        String       @id @default(uuid())
+  familyId  String
+  family    Family       @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  type      CategoryType
+  name      String
+  icon      String       @default("tag")
+  color     String       @default("#6366F1")
+  transactions Transaction[]
+  isActive      Boolean            @default(true)
+  createdAt     DateTime           @default(now())
+  updatedAt     DateTime           @updatedAt
+
+  @@map("categories")
+}
+
+model Wallet {
+  id        String     @id @default(uuid())
+  familyId  String
+  family    Family     @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  name      String
+  type      WalletType @default(CASH)
+  balance   Decimal    @default(0) @db.Decimal(18, 2)
+  icon      String     @default("wallet")
+  color     String     @default("#3B82F6")
+  isActive  Boolean    @default(true)
+  createdAt DateTime   @default(now())
+  updatedAt DateTime   @updatedAt
+
+  transactions Transaction[]
+
+  @@map("wallets")
+}
+
+enum TransactionType {
+  INCOME
+  EXPENSE
+}
+
+model Transaction {
+  id              String          @id @default(uuid())
+  familyId        String
+  family          Family          @relation(fields: [familyId], references: [id], onDelete: Cascade)
+  walletId        String
+  wallet          Wallet          @relation(fields: [walletId], references: [id])
+  categoryId      String
+  category        Category        @relation(fields: [categoryId], references: [id])
+  profileId       String
+  profile         Profile         @relation(fields: [profileId], references: [id])
+  type            TransactionType
+  amount          Decimal         @db.Decimal(18, 2)
+  description     String?
+  transactionDate DateTime        @default(now())
+  createdAt       DateTime        @default(now())
+  updatedAt       DateTime        @updatedAt
+
+  @@map("transactions")
+}
+
+model Setting {
+  id       String @id @default(uuid())
+  familyId String @unique
+  family   Family @relation(fields: [familyId], references: [id], onDelete: Cascade)
+
+  currency   String @default("IDR")
+  timezone   String @default("Asia/Jakarta")
+  language   String @default("id")
+
+  @@map("settings")
+}
