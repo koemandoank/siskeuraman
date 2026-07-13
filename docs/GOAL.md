@@ -23,7 +23,7 @@ fungsi CRUD yang benar-benar jalan (bukan cuma server action tanpa UI).
 - [x] Grafik Dashboard (bar chart 6 bulan + pie chart kategori) — selesai (Sprint 13)
 - [x] Notifikasi (dihitung on-the-fly: tagihan lewat/mendekati jatuh tempo, target tercapai, hutang/piutang lewat jatuh tempo) — selesai (Sprint 14)
 - [x] Audit Log (transaksi, transfer, bayar tagihan/hutang, tabungan, terima piutang) — selesai (Sprint 14)
-- [ ] Backup & Restore — belum ada
+- [x] Backup & Restore (export/import JSON, hanya untuk keluarga sendiri) — selesai (Sprint 15)
 - [ ] Role granular (Ayah/Ibu/Anak) vs schema saat ini (ADMIN/MEMBER)
 - [x] Perbaiki deleteTransfer — sudah dirapikan (hapus dead code, tetap pakai deteksi deskripsi tapi lebih bersih)
 

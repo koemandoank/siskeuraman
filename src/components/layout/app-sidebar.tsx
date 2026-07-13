@@ -22,6 +22,7 @@ import {
   BarChart3,
   Bell,
   History,
+  DatabaseBackup,
 } from "lucide-react"
 import {
   Sidebar,
@@ -77,6 +78,7 @@ const navGroups = [
     items: [
       { title: "Keluarga", url: "/dashboard/families/", icon: Users },
       { title: "Audit Log", url: "/dashboard/audit-log", icon: History },
+      { title: "Backup & Restore", url: "/dashboard/backup", icon: DatabaseBackup },
       { title: "Pengaturan", url: "/dashboard/settings", icon: Settings },
     ],
   },
