@@ -19,8 +19,8 @@ const PIE_COLORS = [
   "#a855f7", "#ec4899", "#84cc16", "#f97316", "#14b8a6",
 ];
 
-function formatRp(value: number) {
-  return `Rp ${value.toLocaleString("id-ID")}`;
+function formatRp(value: number | string | undefined | null) {
+  return `Rp ${Number(value ?? 0).toLocaleString("id-ID")}`;
 }
 
 export function MonthlyBarChart({
@@ -37,7 +37,7 @@ export function MonthlyBarChart({
           fontSize={12}
           tickFormatter={(v) => `${(v / 1000).toLocaleString("id-ID")}rb`}
         />
-        <Tooltip formatter={(v: number) => formatRp(v)} />
+        <Tooltip formatter={(v) => formatRp(v as number)} />
         <Legend />
         <Bar dataKey="Pemasukan" fill="#22c55e" radius={[4, 4, 0, 0]} />
         <Bar dataKey="Pengeluaran" fill="#ef4444" radius={[4, 4, 0, 0]} />
@@ -74,7 +74,7 @@ export function CategoryPieChart({
             <Cell key={i} fill={PIE_COLORS[i % PIE_COLORS.length]} />
           ))}
         </Pie>
-        <Tooltip formatter={(v: number) => formatRp(v)} />
+        <Tooltip formatter={(v) => formatRp(v as number)} />
       </PieChart>
     </ResponsiveContainer>
   );
