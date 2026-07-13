@@ -2,6 +2,7 @@ import { createClient } from "@/lib/supabase/server";
 import { prisma } from "@/lib/prisma";
 import type { FamilyMember, Wallet, Transaction } from "@/generated/prisma/client";
 import { createFamily, joinFamily } from "@/features/family/actions";
+import { redirect } from "next/navigation";
 import Link from "next/link";
 import {
   Wallet as WalletIcon,
@@ -20,7 +21,7 @@ import { Input } from "@/components/ui/input";
 export default async function DashboardPage() {
   const supabase = await createClient();
   const { data: { user } } = await supabase.auth.getUser();
-  if (!user) return null;
+  if (!user) redirect("/login");
 
   let memberships: (FamilyMember & { family: { id: string; name: string } })[] = [];
   let wallets: Wallet[] = [];
@@ -239,7 +240,7 @@ export default async function DashboardPage() {
                           {t.type === "INCOME" ? "Pemasukan" : "Pengeluaran"} — Rp {Number(t.amount).toLocaleString("id-ID")}
                         </p>
                         <p className="text-xs text-muted-foreground">
-                          {t.category.name} · {t.wallet.name}{t.description ? ` · ${t.description}` : ""}
+                          {t.category?.name} · {t.wallet.name}{t.description ? ` · ${t.description}` : ""}
                         </p>
                       </div>
                     </div>

@@ -9,10 +9,11 @@ import { Button } from "@/components/ui/button";
 import { Input } from "@/components/ui/input";
 import { Badge } from "@/components/ui/badge";
 import { Plus, Trash2 } from "lucide-react";
+import { NoFamilyPrompt } from "@/components/layout/no-family-prompt";
 
 export default async function IncomePage() {
   const member = await getCurrentFamilyMember();
-  if (!member) return null;
+  if (!member) return <NoFamilyPrompt />;
 
   const [wallets, categories, transactions] = await Promise.all([
     prisma.wallet.findMany({
@@ -104,7 +105,7 @@ export default async function IncomePage() {
                     <span className="font-semibold text-green-600">
                       Rp {Number(t.amount).toLocaleString("id-ID")}
                     </span>
-                    <Badge variant="outline">{t.category.name}</Badge>
+                    <Badge variant="outline">{t.category?.name}</Badge>
                   </div>
                   <p className="text-muted-foreground mt-0.5 text-xs">
                     {t.wallet.name}
