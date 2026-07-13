@@ -18,6 +18,7 @@ import {
   PiggyBank,
   Home,
   LineChart,
+  HandCoins,
 } from "lucide-react"
 import {
   Sidebar,
@@ -55,6 +56,8 @@ const navGroups = [
       { title: "Tabungan", url: "/dashboard/savings", icon: PiggyBank },
       { title: "Aset", url: "/dashboard/assets", icon: Home },
       { title: "Investasi", url: "/dashboard/investments", icon: LineChart },
+      { title: "Hutang", url: "/dashboard/debts", icon: HandCoins },
+      { title: "Piutang", url: "/dashboard/receivables", icon: HandCoins },
     ],
   },
   {

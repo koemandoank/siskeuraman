@@ -15,8 +15,8 @@ fungsi CRUD yang benar-benar jalan (bukan cuma server action tanpa UI).
 - [x] Tagihan (Bills) — selesai (Sprint 9)
 - [x] Tabungan (Savings) — digabung dengan Target dalam satu model SavingsGoal
 - [x] Target Keuangan (Goals) — lihat di atas
-- [ ] Hutang (Debt) — belum ada
-- [ ] Piutang (Receivables) — belum ada
+- [x] Hutang (Debt) — selesai (Sprint 12)
+- [x] Piutang (Receivables) — selesai (Sprint 12)
 - [x] Investasi — selesai (Sprint 11)
 - [x] Aset — selesai (Sprint 11)
 - [ ] Laporan (PDF/Excel) — belum ada
