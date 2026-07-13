@@ -1,0 +1,25 @@
+{
+  "name": "SIKARA - Sistem Keuangan Keluarga",
+  "short_name": "SIKARA",
+  "description": "Aplikasi manajemen keuangan keluarga",
+  "start_url": "/dashboard",
+  "id": "/dashboard",
+  "display": "standalone",
+  "background_color": "#0a0a0a",
+  "theme_color": "#0a0a0a",
+  "orientation": "portrait",
+  "icons": [
+    {
+      "src": "/logo-sikaraman.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "any"
+    },
+    {
+      "src": "/logo-sikaraman.png",
+      "sizes": "512x512",
+      "type": "image/png",
+      "purpose": "maskable"
+    }
+  ]
+}
