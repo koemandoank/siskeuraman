@@ -6,11 +6,10 @@ export default function Home() {
       <main className="flex flex-col items-center text-center">
         <div
           className="animate-in fade-in zoom-in-90 duration-700 ease-out
-            flex h-32 w-32 items-center justify-center rounded-3xl p-6
-            bg-gradient-to-br from-emerald-400 via-emerald-400 to-cyan-500
-            shadow-[0_20px_45px_-12px_rgba(16,185,129,0.45)]
-            sm:h-40 sm:w-40 sm:p-7
-            md:h-44 md:w-44 md:p-8"
+            flex h-32 w-32 items-center justify-center
+            drop-shadow-[0_15px_35px_rgba(16,185,129,0.35)]
+            sm:h-40 sm:w-40
+            md:h-44 md:w-44"
         >
           <Image
             src="/logo-sikaraman.png"

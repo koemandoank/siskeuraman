@@ -87,7 +87,7 @@ export default function LoginPage() {
 
           <div className="card-face">
             <div className="brand-icon">
-              <Image src="/logo-sikaraman.png" alt="SIKARA" width={44} height={44} className="brand-icon-img" />
+              <Image src="/logo-sikaraman.png" alt="SIKARA" width={72} height={72} className="brand-icon-img" />
             </div>
             <h4>SIKARA</h4>
             <small>Sistem Keuangan Keluarga</small>
@@ -217,12 +217,9 @@ export default function LoginPage() {
         }
         .login-shell.is-open .card-face { opacity: 1; transform: translateY(0); transition-delay: .22s; }
         .brand-icon {
-          width: 72px; height: 72px; margin: 0 auto 22px;
-          padding: 14px;
-          border-radius: 24px;
-          background: linear-gradient(135deg, #10b981, #22d3ee);
+          width: 76px; height: 76px; margin: 0 auto 22px;
           display: flex; align-items: center; justify-content: center;
-          box-shadow: 0 12px 28px rgba(16,185,129,.32), 0 4px 12px rgba(34,211,238,.22);
+          filter: drop-shadow(0 8px 18px rgba(16,185,129,.35));
           opacity: 0;
           transform: scale(.82);
         }
