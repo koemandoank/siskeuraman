@@ -1,0 +1,278 @@
+diff --git a/src/app/dashboard/super/page.tsx b/src/app/dashboard/super/page.tsx
+index 42f18e2..06267a7 100644
+--- a/src/app/dashboard/super/page.tsx
++++ b/src/app/dashboard/super/page.tsx
+@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
+ import { getCurrentProfile } from "@/lib/helpers/family";
+ import { isSuperAdmin } from "@/lib/helpers/access";
+ import { createFamilyAsSuperAdmin } from "@/features/family/actions";
++import { AssignFamilyAdminDialog } from "@/features/family/assign-family-admin-dialog";
+ import { AccessDenied } from "@/components/layout/access-denied";
+ import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
+ import { Button } from "@/components/ui/button";
+@@ -70,9 +71,14 @@ export default async function SuperAdminPage() {
+                       : "Belum ada Family Admin"}
+                   </p>
+                 </div>
+-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
+-                  <Users className="size-4" />
+-                  {family._count.members} anggota
++                <div className="flex items-center gap-3">
++                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
++                    <Users className="size-4" />
++                    {family._count.members} anggota
++                  </div>
++                  {!admin && (
++                    <AssignFamilyAdminDialog familyId={family.id} familyName={family.name} />
++                  )}
+                 </div>
+               </CardContent>
+             </Card>
+diff --git a/src/features/family/actions.ts b/src/features/family/actions.ts
+index 05220e7..aca57ce 100644
+--- a/src/features/family/actions.ts
++++ b/src/features/family/actions.ts
+@@ -3,8 +3,25 @@
+ import { revalidatePath } from "next/cache";
+ import { redirect } from "next/navigation";
+ import { createClient } from "@/lib/supabase/server";
++import { createAdminClient } from "@/lib/supabase/admin";
+ import { prisma } from "@/lib/prisma";
+ 
++async function requireSuperAdmin() {
++  const supabase = await createClient();
++  const {
++    data: { user },
++  } = await supabase.auth.getUser();
++  if (!user) throw new Error("Unauthorized");
++
++  const requester = await prisma.profile.findUnique({
++    where: { id: user.id },
++    select: { role: true },
++  });
++  if (requester?.role !== "SUPER_ADMIN") {
++    throw new Error("Hanya Super Admin yang dapat menggunakan aksi ini");
++  }
++}
++
+ export async function createFamily(formData: FormData) {
+   const supabase = await createClient();
+   const {
+@@ -39,19 +56,7 @@ export async function createFamily(formData: FormData) {
+  * laporan refactor).
+  */
+ export async function createFamilyAsSuperAdmin(formData: FormData) {
+-  const supabase = await createClient();
+-  const {
+-    data: { user },
+-  } = await supabase.auth.getUser();
+-  if (!user) throw new Error("Unauthorized");
+-
+-  const requester = await prisma.profile.findUnique({
+-    where: { id: user.id },
+-    select: { role: true },
+-  });
+-  if (requester?.role !== "SUPER_ADMIN") {
+-    throw new Error("Hanya Super Admin yang dapat menggunakan aksi ini");
+-  }
++  await requireSuperAdmin();
+ 
+   const name = formData.get("name") as string;
+   if (!name || name.trim().length === 0) {
+@@ -63,6 +68,86 @@ export async function createFamilyAsSuperAdmin(formData: FormData) {
+   revalidatePath("/dashboard/super");
+ }
+ 
++/**
++ * Super Admin membuat akun Family Admin PERTAMA untuk sebuah family yang
++ * belum punya admin. Ini menutup gap: sebelumnya tidak ada satu pun cara
++ * di aplikasi untuk membuat akun baru (harus manual lewat SQL/Supabase
++ * Auth). Password sementara wajib diganti sendiri oleh Family Admin
++ * setelah login pertama (belum ada halaman ganti password — dicatat
++ * sebagai TODO terpisah).
++ */
++export async function assignFamilyAdmin(familyId: string, formData: FormData) {
++  await requireSuperAdmin();
++
++  const username = (formData.get("username") as string)?.trim();
++  const name = (formData.get("name") as string)?.trim();
++  const password = formData.get("password") as string;
++  const relationship = (formData.get("relationship") as string) || "AYAH";
++
++  if (!username || !name || !password) {
++    throw new Error("Username, nama, dan password wajib diisi");
++  }
++  if (password.length < 8) {
++    throw new Error("Password minimal 8 karakter");
++  }
++
++  const family = await prisma.family.findUnique({
++    where: { id: familyId },
++    include: { members: { where: { systemRole: "FAMILY_ADMIN" } } },
++  });
++  if (!family) throw new Error("Family tidak ditemukan");
++  if (family.members.length > 0) {
++    throw new Error("Family ini sudah punya Family Admin aktif");
++  }
++
++  const existingUsername = await prisma.profile.findUnique({ where: { username } });
++  if (existingUsername) throw new Error("Username sudah dipakai, pilih yang lain");
++
++  // Username tidak dipakai untuk email asli, jadi generate email placeholder
++  // internal yang unik (aplikasi ini login pakai username, bukan email).
++  const email = `${username}@sikara.internal`;
++
++  const supabaseAdmin = createAdminClient();
++  const { data: created, error } = await supabaseAdmin.auth.admin.createUser({
++    email,
++    password,
++    email_confirm: true,
++  });
++  if (error || !created.user) {
++    throw new Error(`Gagal membuat akun: ${error?.message ?? "unknown error"}`);
++  }
++
++  try {
++    await prisma.$transaction([
++      prisma.profile.create({
++        data: {
++          id: created.user.id,
++          email,
++          username,
++          name,
++          role: "MEMBER", // role global biasa; hak akses FAMILY_ADMIN ada di FamilyMember
++          status: "ACTIVE",
++        },
++      }),
++      prisma.familyMember.create({
++        data: {
++          profileId: created.user.id,
++          familyId,
++          systemRole: "FAMILY_ADMIN",
++          relationship: relationship as "AYAH" | "IBU" | "ANAK",
++        },
++      }),
++    ]);
++  } catch (dbError) {
++    // Rollback manual: kalau insert ke Prisma gagal, jangan tinggalkan
++    // user Supabase Auth yatim tanpa profile.
++    await supabaseAdmin.auth.admin.deleteUser(created.user.id);
++    throw dbError;
++  }
++
++  revalidatePath("/dashboard/super");
++}
++
+ export async function joinFamily(formData: FormData) {
+   const supabase = await createClient();
+   const {
+diff --git a/src/features/family/assign-family-admin-dialog.tsx b/src/features/family/assign-family-admin-dialog.tsx
+new file mode 100644
+index 0000000..0ce3bf0
+--- /dev/null
++++ b/src/features/family/assign-family-admin-dialog.tsx
+@@ -0,0 +1,104 @@
++"use client";
++
++import { useState, useTransition } from "react";
++import { assignFamilyAdmin } from "@/features/family/actions";
++import { Button } from "@/components/ui/button";
++import { Input } from "@/components/ui/input";
++import { Label } from "@/components/ui/label";
++import {
++  Dialog,
++  DialogContent,
++  DialogFooter,
++  DialogHeader,
++  DialogTitle,
++  DialogTrigger,
++} from "@/components/ui/dialog";
++import {
++  Select,
++  SelectContent,
++  SelectItem,
++  SelectTrigger,
++  SelectValue,
++} from "@/components/ui/select";
++
++export function AssignFamilyAdminDialog({
++  familyId,
++  familyName,
++}: {
++  familyId: string;
++  familyName: string;
++}) {
++  const [open, setOpen] = useState(false);
++  const [error, setError] = useState<string | null>(null);
++  const [pending, startTransition] = useTransition();
++
++  async function handleSubmit(formData: FormData) {
++    setError(null);
++    startTransition(async () => {
++      try {
++        await assignFamilyAdmin(familyId, formData);
++        setOpen(false);
++      } catch (err) {
++        setError(err instanceof Error ? err.message : "Gagal membuat Family Admin");
++      }
++    });
++  }
++
++  return (
++    <Dialog open={open} onOpenChange={setOpen}>
++      <DialogTrigger asChild>
++        <Button size="sm" variant="outline">
++          Assign Family Admin
++        </Button>
++      </DialogTrigger>
++      <DialogContent>
++        <DialogHeader>
++          <DialogTitle>Buat Family Admin untuk {familyName}</DialogTitle>
++        </DialogHeader>
++        <form action={handleSubmit} className="space-y-4">
++          <div className="space-y-2">
++            <Label htmlFor="name">Nama Lengkap</Label>
++            <Input id="name" name="name" required />
++          </div>
++          <div className="space-y-2">
++            <Label htmlFor="username">Username</Label>
++            <Input id="username" name="username" required autoComplete="off" />
++          </div>
++          <div className="space-y-2">
++            <Label htmlFor="password">Password Sementara</Label>
++            <Input
++              id="password"
++              name="password"
++              type="password"
++              minLength={8}
++              required
++              autoComplete="new-password"
++            />
++            <p className="text-xs text-muted-foreground">
++              Minimal 8 karakter. Sampaikan ke Family Admin untuk diganti setelah login pertama.
++            </p>
++          </div>
++          <div className="space-y-2">
++            <Label htmlFor="relationship">Relationship</Label>
++            <Select name="relationship" defaultValue="AYAH">
++              <SelectTrigger id="relationship">
++                <SelectValue />
++              </SelectTrigger>
++              <SelectContent>
++                <SelectItem value="AYAH">Ayah</SelectItem>
++                <SelectItem value="IBU">Ibu</SelectItem>
++                <SelectItem value="ANAK">Anak</SelectItem>
++              </SelectContent>
++            </Select>
++          </div>
++          {error && <p className="text-sm text-destructive">{error}</p>}
++          <DialogFooter>
++            <Button type="submit" disabled={pending}>
++              {pending ? "Membuat..." : "Buat Family Admin"}
++            </Button>
++          </DialogFooter>
++        </form>
++      </DialogContent>
++    </Dialog>
++  );
++}

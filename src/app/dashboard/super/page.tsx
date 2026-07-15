@@ -3,6 +3,7 @@ import { prisma } from "@/lib/prisma";
 import { getCurrentProfile } from "@/lib/helpers/family";
 import { isSuperAdmin } from "@/lib/helpers/access";
 import { createFamilyAsSuperAdmin } from "@/features/family/actions";
+import { AssignFamilyAdminDialog } from "@/features/family/assign-family-admin-dialog";
 import { AccessDenied } from "@/components/layout/access-denied";
 import { Card, CardContent, CardHeader, CardTitle } from "@/components/ui/card";
 import { Button } from "@/components/ui/button";
@@ -70,9 +71,14 @@ export default async function SuperAdminPage() {
                       : "Belum ada Family Admin"}
                   </p>
                 </div>
-                <div className="flex items-center gap-1 text-sm text-muted-foreground">
-                  <Users className="size-4" />
-                  {family._count.members} anggota
+                <div className="flex items-center gap-3">
+                  <div className="flex items-center gap-1 text-sm text-muted-foreground">
+                    <Users className="size-4" />
+                    {family._count.members} anggota
+                  </div>
+                  {!admin && (
+                    <AssignFamilyAdminDialog familyId={family.id} familyName={family.name} />
+                  )}
                 </div>
               </CardContent>
             </Card>
