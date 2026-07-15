@@ -1,0 +1,66 @@
+PS D:\laragon\www\SIKARA> npm run lint
+
+> sikara@0.1.0 lint
+> eslint
+
+PS D:\laragon\www\SIKARA> npm run typecheck
+npm ERR! Missing script: "typecheck"
+npm ERR!
+npm ERR! To see a list of scripts, run:
+npm ERR!   npm run
+
+npm ERR! A complete log of this run can be found in: C:\Users\IT-Merak\AppData\Local\npm-cache\_logs\2026-07-14T08_24_28_160Z-debug-0.log
+PS D:\laragon\www\SIKARA> npm run build
+
+> sikara@0.1.0 build
+> next build
+
+   ▲ Next.js 15.5.20
+   - Environments: .env
+
+   Creating an optimized production build ...
+ ✓ Compiled successfully in 13.5s
+ ✓ Linting and checking validity of types
+ ✓ Collecting page data
+ ✓ Generating static pages (27/27)
+ ✓ Collecting build traces
+ ✓ Finalizing page optimization
+
+Route (app)                                 Size  First Load JS
+┌ ○ /                                      489 B         108 kB
+├ ○ /_not-found                            997 B         103 kB
+├ ƒ /api/backup                            131 B         102 kB
+├ ƒ /auth/callback                         131 B         102 kB
+├ ƒ /dashboard                             321 B         192 kB
+├ ƒ /dashboard/assets                      331 B         189 kB
+├ ƒ /dashboard/audit-log                   331 B         189 kB
+├ ƒ /dashboard/backup                      331 B         189 kB
+├ ƒ /dashboard/bills                       331 B         189 kB
+├ ƒ /dashboard/categories                  331 B         189 kB
+├ ƒ /dashboard/debts                       331 B         189 kB
+├ ƒ /dashboard/expense                     331 B         189 kB
+├ ƒ /dashboard/families                    131 B         102 kB
+├ ƒ /dashboard/families/[id]               321 B         192 kB
+├ ƒ /dashboard/income                      331 B         189 kB
+├ ƒ /dashboard/investments                 331 B         189 kB
+├ ƒ /dashboard/notifications               321 B         192 kB
+├ ƒ /dashboard/receivables                 331 B         189 kB
+├ ƒ /dashboard/reports                    118 kB         306 kB
+├ ƒ /dashboard/savings                     331 B         189 kB
+├ ƒ /dashboard/settings                    658 B         197 kB
+├ ƒ /dashboard/super                       331 B         189 kB
+├ ƒ /dashboard/transfer                    331 B         189 kB
+├ ƒ /dashboard/wallets                     331 B         189 kB
+└ ○ /login                               4.44 kB         120 kB
++ First Load JS shared by all             102 kB
+  ├ chunks/255-41622e0825f37f6a.js         46 kB
+  ├ chunks/4bd1b696-409494caf8c83275.js  54.2 kB
+  └ other shared chunks (total)          2.02 kB
+
+
+ƒ Middleware                             91.2 kB
+
+○  (Static)   prerendered as static content
+ƒ  (Dynamic)  server-rendered on demand
+
+PS D:\laragon\www\SIKARA>
